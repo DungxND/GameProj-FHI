@@ -4,7 +4,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <memory>
 #include "defs.h"
 
 using namespace std;
@@ -31,6 +30,7 @@ struct Graphics {
         }
         SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
         SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+        SDL_SetWindowIcon(window, IMG_Load("assets/img/ApScore.png"));
         SDL_Log("Graphic init successful");
     }
 

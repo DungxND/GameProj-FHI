@@ -2,9 +2,7 @@
 #define SAI___SCORE_ACCUMULATING_INCREMENTAL_BUTTON_H
 
 #include <string>
-#include <utility>
 #include "../graphics.h"
-#include "../defs.h"
 
 using namespace std;
 
@@ -29,25 +27,41 @@ struct Button {
     void handleClick(GameData &gameData, bool handleBox = false, int i = 0, int j = 0) {
         mouseX = input->mouse_x;
         mouseY = input->mouse_y;
-        if (input->mouse_clicked && mouseX >= x - w / 2 && mouseX <= x + w / 2 && mouseY >= y - h / 2 && mouseY <= y + h
-            / 2) {
+        if (input->mouse_clicked && mouseX >= x - w / 2 && mouseX <= x + w / 2 && mouseY >= y - h / 2 &&
+            mouseY <= y + h / 2) {
             isDestroyed = true;
-            if (handleBox) gameData.handleScoreBoxClick(i, j);
+            if (handleBox)
+                gameData.handleScoreBoxClick(i, j);
         }
     }
 
-    void draw(Graphics &graphics, int _x, int _y, const string &text = "", int fontSize = 16,
-              int borderThickness = 0,
-              SDL_Color boxColor = {0, 0, 0, 0},
-              SDL_Color borderColor = {0, 0, 0, 0},
+    void handleDefaultOffetClick(GameData &gameData, bool handleBox = false, int i = 0, int j = 0) {
+        mouseX = input->mouse_x;
+        mouseY = input->mouse_y;
+        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h) {
+            isDestroyed = true;
+            if (handleBox)
+                gameData.handleScoreBoxClick(i, j);
+        }
+    }
+
+    void handleTabClick(GameData &gameData, int tabValue) {
+        mouseX = input->mouse_x;
+        mouseY = input->mouse_y;
+        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h) {
+            gameData.openingTab = tabValue;
+        }
+    }
+
+    void draw(Graphics &graphics, int _x, int _y, const string &text = "", int fontSize = 16, int borderThickness = 0,
+              SDL_Color boxColor = {0, 0, 0, 0}, SDL_Color borderColor = {0, 0, 0, 0},
               SDL_Color textColor = {0, 0, 0, 0}, bool destroyable = true, SDL_Texture *texture = nullptr) {
         x = _x;
         y = _y;
         if (!isDestroyed) {
-            if (texture != nullptr) {
-                graphics.renderCenterOfTexture(texture, x, y, w, h);
-            }
             graphics.drawRect(x - w / 2, y - h / 2, w, h, borderThickness, boxColor, borderColor);
+            if (texture != nullptr)
+                graphics.renderCenterOfTexture(texture, x, y, w, h);
             if (!text.empty()) {
                 TTF_SizeText(graphics.PrStart, text.c_str(), &textWidth, &textHeight);
                 graphics.drawCenterOfText(text.c_str(), fontSize, textColor, x, y);
@@ -56,18 +70,17 @@ struct Button {
     }
 
     void drawDefaultOffset(Graphics &graphics, int _x, int _y, const string &text = "", int fontSize = 16,
-                           int borderThickness = 0,
-                           SDL_Color boxColor = {0, 0, 0, 0},
-                           SDL_Color borderColor = {0, 0, 0, 0},
-                           SDL_Color textColor = {0, 0, 0, 0}, bool destroyable = true,
-                           SDL_Texture *texture = nullptr) {
+                           int borderThickness = 0, SDL_Color boxColor = {0, 0, 0, 0},
+                           SDL_Color borderColor = {0, 0, 0, 0}, SDL_Color textColor = {0, 0, 0, 0},
+                           bool destroyable = true, SDL_Texture *texture = nullptr) {
         x = _x;
         y = _y;
         if (!isDestroyed) {
-            if (texture != nullptr) {
-                graphics.renderCenterOfTexture(texture, x, y, w, h);
-            }
             graphics.drawRect(x, y, w, h, borderThickness, boxColor, borderColor);
+            if (texture != nullptr) {
+                int imgW = w * 2 / 3, imgH = h * 2 / 3;
+                graphics.renderCenterOfTexture(texture, x + w / 2, y + h / 2, imgW, imgH);
+            }
             if (!text.empty()) {
                 TTF_SizeText(graphics.PrStart, text.c_str(), &textWidth, &textHeight);
                 graphics.drawCenterOfText(text.c_str(), fontSize, textColor, x, y);
@@ -76,4 +89,4 @@ struct Button {
     }
 };
 
-#endif //SAI___SCORE_ACCUMULATING_INCREMENTAL_BUTTON_H
+#endif // SAI___SCORE_ACCUMULATING_INCREMENTAL_BUTTON_H
