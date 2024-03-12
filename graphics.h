@@ -24,13 +24,14 @@ struct Graphics {
         TTF_SetFontHinting(PrStart, TTF_HINTING_NORMAL);
         if (SDL_Init(SDL_INIT_EVERYTHING) != 0 ||
             !(window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH,
-                                        SCREEN_HEIGHT, SDL_WINDOW_SHOWN)) || !IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) ||
+                                        SCREEN_HEIGHT, SDL_WINDOW_SHOWN)) ||
+            !IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) ||
             !(renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC))) {
             logErrorAndExit("Initialization Error", SDL_GetError());
         }
         SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
         SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-        SDL_SetWindowIcon(window, IMG_Load("assets/img/ApScore.png"));
+        SDL_SetWindowIcon(window, IMG_Load("assets/img/icon.png"));
         SDL_Log("Graphic init successful");
     }
 
@@ -39,9 +40,7 @@ struct Graphics {
         SDL_RenderClear(renderer);
     }
 
-    void presentScene() const {
-        SDL_RenderPresent(renderer);
-    }
+    void presentScene() const { SDL_RenderPresent(renderer); }
 
     SDL_Texture *loadTexture(const char *filename) const {
         SDL_Texture *texture = IMG_LoadTexture(renderer, filename);
@@ -56,9 +55,8 @@ struct Graphics {
                   SDL_Color borderColor = {0, 0, 0, 0}, string name = "") const {
         if (borderThickness > 0) {
             SDL_SetRenderDrawColor(renderer, borderColor.r, borderColor.g, borderColor.b, borderColor.a);
-            SDL_Rect border = {
-                x - borderThickness, y - borderThickness, width + borderThickness * 2, height + borderThickness * 2
-            };
+            SDL_Rect border = {x - borderThickness, y - borderThickness, width + borderThickness * 2,
+                               height + borderThickness * 2};
             SDL_RenderFillRect(renderer, &border);
         }
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
@@ -70,10 +68,8 @@ struct Graphics {
                           SDL_Color borderColor = {0, 0, 0, 0}) const {
         if (borderThickness > 0) {
             SDL_SetRenderDrawColor(renderer, borderColor.r, borderColor.g, borderColor.b, borderColor.a);
-            SDL_Rect border = {
-                x - borderThickness - width / 2, y - borderThickness - height / 2, width + borderThickness * 2,
-                height + borderThickness * 2
-            };
+            SDL_Rect border = {x - borderThickness - width / 2, y - borderThickness - height / 2,
+                               width + borderThickness * 2, height + borderThickness * 2};
             SDL_RenderFillRect(renderer, &border);
         }
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);

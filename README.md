@@ -11,6 +11,10 @@ A simple game developed in C++ using the SDL2 library. The game is a simple incr
 earn score by clicking on the button. The score can be used to get money from many source (sell) then you buy
 document (upgrades) to increase the score per click.
 
+### Download Built Game:
+Click [Release](https://github.com/DungxND/GameProj-SAI/releases) tab to download the latest executable release.
+
+
 ##### TO-DO:
 
 - [x] Save and load game data
@@ -22,6 +26,8 @@ document (upgrades) to increase the score per click.
 
 This project is ready to be built on JetBrains CLion. The `CMakeLists.txt` file is already configured to build the
 project. SDL2, SDL2_image, SDL2_ttf libraries are included. No additional setup is required.
+
+To build the project, open JetBrains CLion, Invalidate CMake Caches and Restart, then reload CMake Project. After that, build the project.
 
 <br/>
 <p align="center">

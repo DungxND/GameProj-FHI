@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.28)
 project(SAI___Score_Accumulating_Incremental)
 
 set(CMAKE_CXX_STANDARD 26)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc ")
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
-add_executable(SAI___Score_Accumulating_Incremental main.cpp game.h defs.h graphics.h structs.h saver.h input.h components/button.h
+add_executable(${PROJECT_NAME} main.cpp project.o game.h defs.h graphics.h structs.h saver.h input.h components/button.h
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
@@ -17,4 +17,4 @@ find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-target_link_libraries(SAI___Score_Accumulating_Incremental ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})

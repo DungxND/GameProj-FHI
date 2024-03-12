@@ -34,4 +34,8 @@ cmake-build-debug/*
 !cmake-build-debug/SDL2.dll
 !cmake-build-debug/SDL2_image.dll
 !cmake-build-debug/SDL2_ttf.dll
+
+Score_Accumulating_Incremental/*
+.idea
+
 SDL/test
