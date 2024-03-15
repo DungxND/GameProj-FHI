@@ -20,6 +20,7 @@ struct Input {
     }
 
     void get() {
+        SDL_PumpEvents();
         SDL_Event event;
         while (SDL_PollEvent(&event)) {
             switch (event.type) {
@@ -41,7 +42,6 @@ struct Input {
                         keyboard[event.key.keysym.scancode] = 0;
                     }
                     break;
-
                 case SDL_MOUSEMOTION:
                     SDL_GetMouseState(&mouse_x, &mouse_y);
                     break;

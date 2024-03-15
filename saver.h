@@ -17,9 +17,10 @@ struct Saver {
             file << gameData->playTime << "\n";
             file << gameData->score << "\n";
             file << gameData->money << "\n";
-            file << gameData->scoreBoxUpgrade << "\n";
-            file << gameData->boxSpawnTimeUprade << "\n";
-            file << gameData->sellPriceUpgrade << "\n";
+            file << gameData->boxValueUpgrade[0] << "\n";
+            file << gameData->boxAmmountUpgrade[0] << "\n";
+            file << gameData->boxSpawnTimeUprade[0] << "\n";
+            file << gameData->sellPriceUpgrade[0] << "\n";
             file.close();
             SDL_Log("Game saved!");
         } else {
@@ -35,9 +36,10 @@ struct Saver {
             file >> gameData->playTime;
             file >> gameData->score;
             file >> gameData->money;
-            file >> gameData->scoreBoxUpgrade;
-            file >> gameData->boxSpawnTimeUprade;
-            file >> gameData->sellPriceUpgrade;
+            file >> gameData->boxValueUpgrade[0];
+            file >> gameData->boxAmmountUpgrade[0];
+            file >> gameData->boxSpawnTimeUprade[0];
+            file >> gameData->sellPriceUpgrade[0];
             file.close();
             SDL_Log("Save data loaded!");
         } else {

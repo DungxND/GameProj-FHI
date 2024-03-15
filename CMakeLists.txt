@@ -2,10 +2,11 @@ cmake_minimum_required(VERSION 3.28)
 project(SAI___Score_Accumulating_Incremental)
 
 set(CMAKE_CXX_STANDARD 26)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc -std=c++23")
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
-add_executable(${PROJECT_NAME} main.cpp project.o game.h defs.h graphics.h structs.h saver.h input.h components/button.h
-)
+
+add_compile_options(-fPIC)
+add_executable(${PROJECT_NAME} main.cpp game.h defs.h graphics.h structs.h saver.h input.h components/button.h)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 set(SDL2_PATH "SDL/x86_64-w64-mingw32")

@@ -11,6 +11,7 @@
 #define TOTAL_DATA 10
 
 #define MAX_KEYBOARD_KEYS 350
+
 #define FRAME_PER_SECOND 60
 
 #define BG_COLOR_R 96
