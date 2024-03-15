@@ -1,0 +1,66 @@
+name: CI Test
+
+on: [ push, pull_request, workflow_call ]
+permissions: write-all
+
+env:
+  VERSION: V0.0.3
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          ls 
+          choco upgrade all --no-progress -y
+          choco install mingw cmake ninja 7zip --pre --no-progress -y
+          Import-Module "$env:ChocolateyInstall/helpers/chocolateyInstaller.psm1"
+          refreshenv
+
+      - uses: libsdl-org/setup-sdl@main
+        id: sdl
+        with:
+          install-linux-dependencies: false
+          version: 2-latest
+          version-sdl-image: 2-latest
+          version-sdl-ttf: 2-latest
+          version-sdl-mixer: 2-latest
+          ninja: true
+
+      - name: Build
+        run: |
+          windres -i project.rc -o project.o
+          pwd
+          cmake -DCMAKE_BUILD_TYPE=Release "-DCMAKE_MAKE_PROGRAM=C:/ProgramData/chocolatey/lib/ninja/tools/ninja.exe" -G Ninja -S ./ -B ./build
+          cmake --build ./build --target SAI___Score_Accumulating_Incremental -j 14
+          ninja -C build
+
+      - name: Zip the build
+        run: |
+          cp SDL2.dll SDL2_image.dll SDL2_ttf.dll SDL2_mixer.dll build
+          cd build
+          7z a -sfx -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on SAI___Score_Accumulating_Incremental.exe assets/ SDL2.dll SDL2_image.dll SDL2_ttf.dll -o SAI_${{env.VERSION}}.7z
+          ls -la
+
+      - name: Generate release notes
+        run: |
+          echo "Release notes for ${{ github.ref }}:" > release-notes.txt
+          git log --pretty=format:"- %s" >> release-notes.txt
+
+      - name: Create tag
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git tag ${{ env.VERSION }}
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/Score_Accumulating_Incremental.7z
+          tag_name: ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
+          body_path: release-notes.txt

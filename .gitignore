@@ -30,12 +30,9 @@
 *.out
 *.app
 
-cmake-build-debug/*
-!cmake-build-debug/SDL2.dll
-!cmake-build-debug/SDL2_image.dll
-!cmake-build-debug/SDL2_ttf.dll
-
 Score_Accumulating_Incremental/*
 .idea
-
+cmake-build-debug
 SDL/test
+build-tools
+

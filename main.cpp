@@ -1,7 +1,7 @@
 #include <iostream>
 #include <SDL_main.h>
-#include "game.h"
-#include "components/button.h"
+#include "game.hpp"
+#include "components/button.hpp"
 
 
 using namespace std;
