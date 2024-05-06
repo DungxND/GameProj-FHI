@@ -1,3 +1,5 @@
+#ifndef INPUT_HPP
+#define INPUT_HPP
 #include <SDL.h>
 #include "defs.hpp"
 #include "structs.hpp"
@@ -70,10 +72,5 @@ struct Input
     {
         return keyboard[key];
     }
-
-    //getmouselocation
-    Point getMouseLocation() const
-    {
-        return {mouse_x, mouse_y};
-    }
 };
+#endif // INPUT_HPP

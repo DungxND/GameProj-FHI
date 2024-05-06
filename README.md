@@ -5,16 +5,18 @@ C++ SDL Game: SAI - Score Accumulating Incremental</h3>
 
 ## Introduction
 
-A simple game developed in C++ using the SDL2 library. The game is a simple incremental game where the player
+A game developed in C++ using the SDL2 library. The game is a simple incremental game where the player
 earn score by clicking on the button. Level up to earn perk, which you can use upgrade many things.
 
-### Download Built Game:
+### Download
 
 Click [Release](https://github.com/DungxND/GameProj-SAI/releases) tab to download the latest executable release.
 
-##### TO-DO:
+#### TO-DO:
 
 - [x] Save and load game data
+- [ ] Create separate upgrade infobox
+- [ ] Add reset layers
 - [ ] Add more upgrades
 - [ ] Add more sources
 - [ ] Multiple board tabs
@@ -24,7 +26,8 @@ Click [Release](https://github.com/DungxND/GameProj-SAI/releases) tab to downloa
 This project is ready to be built on JetBrains CLion. The `CMakeLists.txt` file is already configured to build the
 project. SDL2, SDL2_image, SDL2_ttf libraries are included. No additional setup is required.
 
-To build the project, open JetBrains CLion, Invalidate CMake Caches and Restart, then reload CMake Project. After that,
+To build the project, clone this repo and open in JetBrains CLion, Invalidate CMake Caches and Restart, then reload
+CMake Project. After that,
 build the project.
 
 <br/>

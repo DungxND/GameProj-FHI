@@ -38,7 +38,7 @@ struct GameData
 
     int calBoxValue(int x)
     {
-        return static_cast<int>(pow(1.35, x)) + boxValueUpgrade[0];
+        return static_cast<int>(pow(1.35, x)) + (x - 1);
     }
 
     int calNextBoxValue()
