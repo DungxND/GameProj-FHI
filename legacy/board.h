@@ -17,10 +17,10 @@ struct Board {
         this->h = h;
     }
 
-    void draw(Graphics &graphics, SDL_Color boxColor, SDL_Color borderColor) {
+    void draw(Graphics &graphics, SDL_Color flowerColor, SDL_Color borderColor) {
         if (!isHidden) {
             graphics.drawRect(x - 3, y - 3, w + 6, h + 6, borderColor);
-            graphics.drawRect(x, y, w, h, boxColor);
+            graphics.drawRect(x, y, w, h, flowerColor);
         }
     }
 };

@@ -6,6 +6,7 @@
 #include "input.hpp"
 #include "saver.hpp"
 #include "components/button.hpp"
+#include "components/upgrader.hpp"
 
 using namespace std;
 
@@ -15,9 +16,11 @@ struct Game
     Saver saver;
     Input input;
     Painter painter;
-    Button startButton, perkStat, scoreStat, scoreBoxButton, inactiveScoreBoxButton, upgradeTabMenu, perkMenu,
+    Button startButton, perkStat, scoreStat, flowerButton, inactiveButton, upgradeTabMenu, perkMenu,
            settingTabMenu, sellBtn, timeUpgradeInfo, timeUpgradeBtn, valueUpgradeInfo, valueUpgradeBtn, xpStat,
            limitUpgradeInfo, limitUpgradeBtn;
+
+    Upgrader valueUpgrader, timeUpgrader, limitUpgrader;
     Button musicBtn;
     Mix_Music* musicx = nullptr;
     GameData gameData;
@@ -28,7 +31,7 @@ struct Game
     int oldTime = 0;
     int boxSpawnTime = 0;
     int const SW = SCREEN_WIDTH, SH = SCREEN_HEIGHT;
-    SDL_Texture *upgrade_icon, *perk_icon, *setting_icon, *ApScore;
+    SDL_Texture *background, *upgradeIcon, *perkIcon, *settingIcon, *ApScore, *flowerIcon;
 
     Game();
 
@@ -36,7 +39,7 @@ struct Game
 
     void draw_n_handle_elements();
 
-    void draw_mainboard();
+    void draw_garden();
 
     void draw_respawn_timer();
 

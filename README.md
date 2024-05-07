@@ -1,12 +1,13 @@
-<h1 align="center" style="font-weight:bold;">GameProj-SAI
+<h1 align="center" style="font-weight:bold;">FHI
 </h1>
 <h3 align="center" style="font-weight:bold">
-C++ SDL Game: SAI - Score Accumulating Incremental</h3>
+C++ SDL Game: Flower Harvesting Incremental</h3>
 
 ## Introduction
 
 A game developed in C++ using the SDL2 library. The game is a simple incremental game where the player
-earn score by clicking on the button. Level up to earn perk, which you can use upgrade many things.
+earn score by harvesting flowers (clicking on buttons). Level up to earn perk, which you can use upgrade many more
+things.
 
 ### Download
 
@@ -24,7 +25,7 @@ Click [Release](https://github.com/DungxND/GameProj-SAI/releases) tab to downloa
 ## Build
 
 This project is ready to be built on JetBrains CLion. The `CMakeLists.txt` file is already configured to build the
-project. SDL2, SDL2_image, SDL2_ttf libraries are included. No additional setup is required.
+project. SDL2, SDL2_image, SDL2_ttf, SDL2_mixer libraries are included. No additional setup is required.
 
 To build the project, clone this repo and open in JetBrains CLion, Invalidate CMake Caches and Restart, then reload
 CMake Project. After that,

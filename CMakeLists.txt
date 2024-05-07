@@ -4,11 +4,10 @@ project(SAI___Score_Accumulating_Incremental)
 set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc -std=c++23")
 file(COPY assets SDL/x86_64-w64-mingw32/bin/SDL2.dll SDL/x86_64-w64-mingw32/bin/SDL2_image.dll SDL/x86_64-w64-mingw32/bin/SDL2_ttf.dll SDL/x86_64-w64-mingw32/bin/SDL2_mixer.dll DESTINATION ${CMAKE_BINARY_DIR})
-
 add_compile_options(-fPIC)
 add_executable(${PROJECT_NAME}
+        icon.o
         main.cpp
-        project.o
         game.hpp
         game.cpp
         defs.hpp
@@ -18,6 +17,8 @@ add_executable(${PROJECT_NAME}
         saver.hpp
         input.hpp
         components/button.hpp
+        components/upgrader.cpp
+        components/upgrader.hpp
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)

@@ -18,6 +18,7 @@ struct Button
     bool isUpgraded = false;
     bool isPressed = false;
     bool isDestroyed = false;
+    bool upgradeInfoOpening = false;
     string name;
 
     Button() = default;
@@ -32,7 +33,7 @@ struct Button
     }
 
 
-    void handleClick(GameData& gameData, bool handleBox = false, int i = 0, int j = 0)
+    void handle_click(GameData& gameData, bool handleBox = false, int i = 0, int j = 0)
     {
         mouseX = input->mouse_x;
         mouseY = input->mouse_y;
@@ -41,11 +42,11 @@ struct Button
         {
             isDestroyed = true;
             if (handleBox)
-                gameData.handleScoreBoxClick(i, j);
+                gameData.handle_flower_click(i, j);
         }
     }
 
-    void handleUpgradeClick(auto& data, auto& currency, int price)
+    void handle_upgrade_click(auto& data, auto& currency, int price)
     {
         mouseX = input->mouse_x;
         mouseY = input->mouse_y;
@@ -65,7 +66,7 @@ struct Button
         }
     }
 
-    void handleDefaultOffetClick(GameData& gameData, bool handleBox = false, int i = 0, int j = 0)
+    void handle_default_offset_click(GameData& gameData, bool handleBox = false, int i = 0, int j = 0)
     {
         mouseX = input->mouse_x;
         mouseY = input->mouse_y;
@@ -73,11 +74,11 @@ struct Button
         {
             isDestroyed = true;
             if (handleBox)
-                gameData.handleScoreBoxClick(i, j);
+                gameData.handle_flower_click(i, j);
         }
     }
 
-    void handleTabClick(GameData& gameData, int tabValue)
+    void handle_tab_click(GameData& gameData, int tabValue)
     {
         mouseX = input->mouse_x;
         mouseY = input->mouse_y;
@@ -88,7 +89,7 @@ struct Button
     }
 
 
-    bool handleHover()
+    bool handle_hover()
     {
         mouseX = input->mouse_x;
         mouseY = input->mouse_y;
@@ -103,7 +104,7 @@ struct Button
         return isHovering;
     }
 
-    void handleMusicClick(GameData& gameData, bool& musicPaused)
+    void handle_music_click(GameData& gameData, bool& musicPaused)
     {
         mouseX = input->mouse_x;
         mouseY = input->mouse_y;
@@ -139,54 +140,74 @@ struct Button
         y = _y;
         if (!isDestroyed)
         {
-            graphics.drawRect(x - w / 2, y - h / 2, w, h, borderThickness, boxColor, borderColor);
+            graphics.draw_rect(x - w / 2, y - h / 2, w, h, borderThickness, boxColor, borderColor);
             if (texture != nullptr)
-                graphics.renderCenterOfTexture(texture, x, y, w, h);
+                graphics.render_center_of_texture(texture, x, y, w, h);
             if (!text.empty())
             {
                 TTF_SizeText(graphics.PrStart, text.c_str(), &textWidth, &textHeight);
-                graphics.drawCenterOfText(text.c_str(), fontSize, textColor, x, y);
+                graphics.draw_center_of_text(text.c_str(), fontSize, textColor, x, y);
             }
         }
     }
 
-    void drawDefaultOffset(int _x, int _y, const string& text = "", int fontSize = 16,
-                           int borderThickness = 0, SDL_Color boxColor = {0, 0, 0, 0},
-                           SDL_Color borderColor = {0, 0, 0, 0}, SDL_Color textColor = {0, 0, 0, 0},
-                           bool destroyable = true, SDL_Texture* texture = nullptr, double icon_scale = 0.666)
+    void draw_default_offset(int _x, int _y, const string& text = "", int fontSize = 16,
+                             int borderThickness = 0, SDL_Color boxColor = {0, 0, 0, 0},
+                             SDL_Color borderColor = {0, 0, 0, 0}, SDL_Color textColor = {0, 0, 0, 0},
+                             bool destroyable = true, SDL_Texture* texture = nullptr, double icon_scale = 0.666)
     {
         x = _x;
         y = _y;
         if (!isDestroyed)
         {
-            graphics.drawRect(x, y, w, h, borderThickness, boxColor, borderColor);
+            graphics.draw_rect(x, y, w, h, borderThickness, boxColor, borderColor);
             if (texture != nullptr)
             {
                 int imgW = w * icon_scale, imgH = h * icon_scale;
-                graphics.renderCenterOfTexture(texture, x + w / 2, y + h / 2, imgW, imgH);
+                graphics.render_center_of_texture(texture, x + w / 2, y + h / 2, imgW, imgH);
             }
             if (!text.empty())
             {
                 TTF_SizeText(graphics.PrStart, text.c_str(), &textWidth, &textHeight);
-                graphics.drawText(text.c_str(), fontSize, textColor, x + 10, y + h / 2 - textHeight / 3);
+                graphics.draw_text(text.c_str(), fontSize, textColor, x + 10, y + h / 2 - textHeight / 3);
             }
         }
     }
 
-    void drawUpgradeInfo(int _x, int _y, int fontSize = 16,
-                         const string& upgradeTitle = "", const string& currentValue = "",
-                         const string& nextValue = "")
+    void draw_upgrade_info(int _x, int _y, int fontSize = 16,
+                           const string& upgradeTitle = "", const string& currentValue = "",
+                           const string& nextValue = "")
     {
         x = _x;
         y = _y;
         int borderThickness = 3;
-        graphics.drawRect(x, y, w, h, borderThickness,
-                          painter.brown, painter.darkBrown, upgradeTitle);
-        graphics.drawText(upgradeTitle.c_str(), 18, painter.white, x + 20, y + 20);
+        graphics.draw_rect(x, y, w, h, borderThickness,
+                           painter.brown, painter.darkBrown, upgradeTitle);
+        graphics.draw_text(upgradeTitle.c_str(), 18, painter.white, x + 20, y + 20);
         string currentScoreValue = "Current value: " + currentValue;
-        graphics.drawText(currentScoreValue.c_str(), 14, painter.lightGrey, x + 20, y + 60);
+        graphics.draw_text(currentScoreValue.c_str(), 14, painter.lightGrey, x + 20, y + 60);
         string nextScoreValue = "Next value: " + nextValue;
-        graphics.drawText(nextScoreValue.c_str(), 14, painter.lightGrey, x + 20, y + 85);
+        graphics.draw_text(nextScoreValue.c_str(), 14, painter.lightGrey, x + 20, y + 85);
+    }
+
+    void handle_open_upgrade_info_click()
+    {
+        mouseX = input->mouse_x;
+        mouseY = input->mouse_y;
+        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
+        {
+            upgradeInfoOpening = true;
+        }
+    }
+
+    void handle_close_upgrade_info_click()
+    {
+        mouseX = input->mouse_x;
+        mouseY = input->mouse_y;
+        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
+        {
+            upgradeInfoOpening = false;
+        }
     }
 };
 

@@ -1,7 +1,7 @@
 #ifndef _DEFS__H
 #define _DEFS__H
 
-#define WINDOW_TITLE "Score Accumulating Incremental"
+#define WINDOW_TITLE "Flower Harvesting Incremental"
 #define SCREEN_WIDTH 1400
 #define SCREEN_HEIGHT 800
 #define MAINBOARD_WIDTH SCREEN_WIDTH * 0.5

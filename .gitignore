@@ -33,6 +33,7 @@
 Score_Accumulating_Incremental/*
 .idea
 cmake-build-debug
+cmake-build-release
 SDL/test
 build-tools
 

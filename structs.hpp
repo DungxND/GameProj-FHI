@@ -1,4 +1,3 @@
-
 #ifndef _APP__H
 #define _APP__H
 
@@ -20,97 +19,96 @@ struct GameData
     int xp = 1;
     int score = 0;
     int perk = 0;
-    int availableBoxes = 0;
-    int boxValueUpgrade[2] = {1, 50};
-    int boxLimitUpgrade[2] = {1, 100};
-    int boxSpawnTimeUprade[2] = {1, 25};
-    int sellPriceUpgrade[2] = {1, 25};
-    bool boxArr[10][10] = {false};
+    int availableFlower = 0;
+    int flowerValueUpgrade[2] = {1, 50};
+    int flowerLimitUpgrade[2] = {1, 100};
+    int flowerSpawnTimeUpgrade[2] = {1, 25};
+    bool flowerArr[10][10] = {false};
     int openingTab = 1;
     int musicVolume = 50;
     uint32_t lastSpawnTime = 0;
 
 
-    int calBoxUpgradeCost()
+    int calc_flower_upgrade_cost()
     {
-        return static_cast<int>(pow(1.475, boxValueUpgrade[0])) + boxValueUpgrade[0] * 15;
+        return static_cast<int>(pow(1.475, flowerValueUpgrade[0])) + flowerValueUpgrade[0] * 10;
     }
 
-    int calBoxValue(int x)
+    int calc_flower_value(int x)
     {
         return static_cast<int>(pow(1.35, x)) + (x - 1);
     }
 
-    int calNextBoxValue()
+    int calc_next_flower_value()
     {
-        return calBoxValue(boxValueUpgrade[0] + 1);
+        return calc_flower_value(flowerValueUpgrade[0] + 1);
     }
 
-    int calBoxValue()
+    int calc_flower_value()
     {
-        return calBoxValue(boxValueUpgrade[0]);
+        return calc_flower_value(flowerValueUpgrade[0]);
     }
 
-    int calSpawnTimeUpgradeCost()
+    int calc_spawn_time_upgrade_cost()
     {
-        return static_cast<int>(pow(boxSpawnTimeUprade[0] + 2, 2.8 + boxSpawnTimeUprade[0] * 0.135)) +
-            boxSpawnTimeUprade
+        return static_cast<int>(pow(flowerSpawnTimeUpgrade[0] + 2, 2.8 + flowerSpawnTimeUpgrade[0] * 0.135)) +
+            flowerSpawnTimeUpgrade
             [0] * 100;
     }
 
-    double calSpawnTime(int x)
+    double calc_spawn_time(int x)
     {
         if (x <= 25 && x > 0)
             return 3000 - 600 * sqrt(x);
         return 0;
     }
 
-    int xpToNextLevel() const
+    int xp_to_next_level() const
     {
         return pow(level, 1.5) + level * 100;
     }
 
-    int calEarnedXp()
+    int calc_earned_xp()
     {
         return 1;
     }
 
-    double calNextSpawnTime()
+    double calc_next_spawn_time()
     {
-        return calSpawnTime(boxSpawnTimeUprade[0] + 1);
+        return calc_spawn_time(flowerSpawnTimeUpgrade[0] + 1);
     }
 
-    double calSpawnTime()
+    double calc_spawn_time()
     {
-        return calSpawnTime(boxSpawnTimeUprade[0]);
+        return calc_spawn_time(flowerSpawnTimeUpgrade[0]);
     }
 
-    int calBoxLimitUpgradeCost()
+    int calc_box_limit_upgrade_cost()
     {
-        return static_cast<int>(pow(1.5, boxLimitUpgrade[0])) + boxLimitUpgrade[0] * 10;
+        return static_cast<int>(pow(1.5, flowerLimitUpgrade[0])) + flowerLimitUpgrade[0] * 10;
     }
 
-    void randomizeScoreBoxes(uint32_t currTime)
+    void randomize_flower_spawn(uint32_t currTime)
     {
-        while (availableBoxes < boxLimitUpgrade[0] && (currTime - lastSpawnTime) > calSpawnTime())
+        while (availableFlower < flowerLimitUpgrade[0] && (currTime - lastSpawnTime) > calc_spawn_time())
         {
             int x = rand() % 10;
             int y = rand() % 10;
-            if (!boxArr[x][y])
+            if (!flowerArr[x][y])
             {
-                boxArr[x][y] = true;
-                availableBoxes++;
+                flowerArr[x][y] = true;
+                availableFlower++;
                 lastSpawnTime = currTime;
             }
         }
     }
 
-    void xpHandler()
+    void xp_handler()
     {
-        int earned_xp = calEarnedXp();
-        if (xp + earned_xp >= xpToNextLevel())
+        int earned_xp = calc_earned_xp();
+        if (xp + earned_xp >= xp_to_next_level())
         {
-            xp = xp + earned_xp - xpToNextLevel();
+            xp = xp + earned_xp - xp_to_next_level();
             level++;
             perk++;
         }
@@ -120,14 +118,14 @@ struct GameData
         }
     }
 
-    void handleScoreBoxClick(int i, int j)
+    void handle_flower_click(int i, int j)
     {
-        if (boxArr[i][j])
+        if (flowerArr[i][j])
         {
-            boxArr[i][j] = false;
-            score += calBoxValue();
-            xpHandler();
-            availableBoxes--;
+            flowerArr[i][j] = false;
+            score += calc_flower_value();
+            xp_handler();
+            availableFlower--;
         }
     }
 };

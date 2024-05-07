@@ -23,10 +23,9 @@ struct Saver
             file << gameData->xp << "\n";
             file << gameData->score << "\n";
             file << gameData->perk << "\n";
-            file << gameData->boxValueUpgrade[0] << "\n";
-            file << gameData->boxLimitUpgrade[0] << "\n";
-            file << gameData->boxSpawnTimeUprade[0] << "\n";
-            file << gameData->sellPriceUpgrade[0] << "\n";
+            file << gameData->flowerValueUpgrade[0] << "\n";
+            file << gameData->flowerLimitUpgrade[0] << "\n";
+            file << gameData->flowerSpawnTimeUpgrade[0] << "\n";
             file << gameData->musicVolume << "\n";
             file.close();
             SDL_Log("Game saved!");
@@ -50,10 +49,9 @@ struct Saver
             file >> gameData->xp;
             file >> gameData->score;
             file >> gameData->perk;
-            file >> gameData->boxValueUpgrade[0];
-            file >> gameData->boxLimitUpgrade[0];
-            file >> gameData->boxSpawnTimeUprade[0];
-            file >> gameData->sellPriceUpgrade[0];
+            file >> gameData->flowerValueUpgrade[0];
+            file >> gameData->flowerLimitUpgrade[0];
+            file >> gameData->flowerSpawnTimeUpgrade[0];
             file >> gameData->musicVolume;
             file.close();
             SDL_Log("Save data loaded!");

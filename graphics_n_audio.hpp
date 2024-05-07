@@ -20,32 +20,32 @@ struct Graphics
 
     void init();
 
-    void prepareScene() const;
+    void prepare_scene() const;
 
     void presentScene() const { SDL_RenderPresent(renderer); }
 
-    SDL_Texture* loadTexture(const char* filename) const;
+    SDL_Texture* load_texture(const char* filename) const;
 
-    void drawRect(int x, int y, int width, int height, int borderThickness = 0, SDL_Color color = {0, 0, 0, 0},
+    void draw_rect(int x, int y, int width, int height, int borderThickness = 0, SDL_Color color = {0, 0, 0, 0},
                   SDL_Color borderColor = {0, 0, 0, 0}, const string& name = "") const;
 
-    void drawCenterOfRect(int x, int y, int width, int height, int borderThickness = 0, SDL_Color color = {0, 0, 0, 0},
+    void draw_center_of_rect(int x, int y, int width, int height, int borderThickness = 0, SDL_Color color = {0, 0, 0, 0},
                           SDL_Color borderColor = {0, 0, 0, 0}) const;
 
-    void renderTexture(SDL_Texture* texture, int x, int y, int width, int height,
+    void render_texture(SDL_Texture* texture, int x, int y, int width, int height,
                        SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 
-    void renderCenterOfTexture(SDL_Texture* texture, int x, int y, int width, int height,
+    void render_center_of_texture(SDL_Texture* texture, int x, int y, int width, int height,
                                SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 
-    void drawText(const char* text, int fontSize = 16, SDL_Color color = {0, 0, 0, 0}, int x = 0, int y = 0) const;
+    void draw_text(const char* text, int fontSize = 16, SDL_Color color = {0, 0, 0, 0}, int x = 0, int y = 0) const;
 
-    void drawCenterOfText(const char* text, int fontSize = 16, SDL_Color color = {0, 0, 0, 0}, int x = 0,
+    void draw_center_of_text(const char* text, int fontSize = 16, SDL_Color color = {0, 0, 0, 0}, int x = 0,
                           int y = 0) const;
 
-    Mix_Music* loadMusic(const char* filename) const;
+    Mix_Music* load_music(const char* filename) const;
 
-    void playMusic(Mix_Music* music, bool loop = true);
+    void play_music(Mix_Music* music, bool loop = true);
 
     void quit() const;
 };
