@@ -136,6 +136,13 @@ void Graphics::play_music(Mix_Music* music, bool loop)
     }
 }
 
+void Graphics::change_music(Mix_Music* music)
+{
+    Mix_HaltMusic();
+    Mix_PlayMusic(music, -1);
+}
+
+
 void Graphics::quit() const
 {
     IMG_Quit();
@@ -147,3 +154,4 @@ void Graphics::quit() const
     TTF_Quit();
     SDL_Quit();
 }
+

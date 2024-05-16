@@ -1,7 +1,8 @@
-#ifndef SAI___SCORE_ACCUMULATING_INCREMENTAL_BUTTON_H
-#define SAI___SCORE_ACCUMULATING_INCREMENTAL_BUTTON_H
+#ifndef FHI_Flower_Harvesting_Inc_BUTTON_H
+#define FHI_Flower_Harvesting_Inc_BUTTON_H
 
 #include <string>
+#include <iostream>
 #include "../graphics_n_audio.hpp"
 
 using namespace std;
@@ -18,18 +19,19 @@ struct Button
     bool isUpgraded = false;
     bool isPressed = false;
     bool isDestroyed = false;
-    bool upgradeInfoOpening = false;
+    bool upgradeInfoOpening = false, flip = false;
     string name;
 
     Button() = default;
 
-    explicit Button(Graphics& graphics, Input& input, int w = 300, int h = 100, string name = "")
+    Button(Graphics& graphics, Input& input, int w = 300, int h = 100, string name = "", bool flip = false)
     {
         this->graphics = graphics;
         this->input = &input;
         this->w = w;
         this->h = h;
         this->name = move(name);
+        this->flip = flip;
     }
 
 
@@ -110,19 +112,19 @@ struct Button
         mouseY = input->mouse_y;
         if (input->mouse_clicked && !isClicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
         {
-            if (gameData.musicPlaying && !musicPaused)
+            if (gameData.musicShouldPlay && !musicPaused)
             {
-                gameData.musicPlaying = false;
+                gameData.musicShouldPlay = false;
                 Mix_PauseMusic();
                 musicPaused = true;
                 SDL_Log("Music paused");
             }
             else
             {
-                gameData.musicPlaying = true;
+                gameData.musicShouldPlay = true;
                 Mix_ResumeMusic();
                 musicPaused = false;
-                SDL_Log("resumed music");
+                SDL_Log("Music resumed/started");
             }
             isClicked = true;
         }
@@ -130,6 +132,76 @@ struct Button
         {
             isClicked = false;
         }
+    }
+
+
+    void handle_next_song_click(GameData& gameData)
+    {
+        mouseX = input->mouse_x;
+        mouseY = input->mouse_y;
+        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h && isClicked ==
+            false
+        )
+        {
+            gameData.musicSelection = (gameData.musicSelection + 1) % 4;
+            isClicked = true;
+        }
+        if (!input->mouse_clicked)
+        {
+            isClicked = false;
+        }
+    }
+
+    void handle_prev_song_click(GameData& gameData)
+    {
+        mouseX = input->mouse_x;
+        mouseY = input->mouse_y;
+        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h && isClicked ==
+            false)
+        {
+            gameData.musicSelection = (gameData.musicSelection + 3) % 4;
+            isClicked = true;
+        }
+        if (!input->mouse_clicked)
+        {
+            isClicked = false;
+        }
+    }
+
+    void handle_map_click(int& mapValue, int inpMap)
+    {
+        mouseX = input->mouse_x;
+        mouseY = input->mouse_y;
+        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h && !isClicked)
+        {
+            mapValue = inpMap;
+            isClicked = true;
+        }
+        if (!input->mouse_clicked)
+        {
+            isClicked = false;
+        }
+    }
+
+    void handle_volume_slider(GameData& gameData)
+    {
+        mouseX = input->mouse_x;
+        mouseY = input->mouse_y;
+        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
+        {
+            gameData.musicVolume = (mouseX * 1.0 - x * 1.0) / w * 128.0;
+        }
+        if (input->mouse_clicked && mouseX >= x + w && mouseX <= x + w + 15 && mouseY >= y && mouseY <= y + h)
+        {
+            gameData.musicVolume = 128;
+        }
+        if (input->mouse_clicked && mouseX >= x - 15 && mouseX <= x && mouseY >= y && mouseY <= y + h)
+        {
+            gameData.musicVolume = 0;
+        }
+        graphics.draw_rect(x + 2, y + 2, (w - 4) * (gameData.musicVolume / 128.0), h - 4, 0, painter.orange);
+        graphics.draw_text(("Volume: " + to_string(static_cast<int>(gameData.musicVolume / 128.0 * 100)) +
+                               "%").c_str(), 16, painter.white, x + 10, y + h / 2);
     }
 
     void draw(int _x, int _y, const string& text = "", int fontSize = 16, int borderThickness = 0,
@@ -164,7 +236,8 @@ struct Button
             if (texture != nullptr)
             {
                 int imgW = w * icon_scale, imgH = h * icon_scale;
-                graphics.render_center_of_texture(texture, x + w / 2, y + h / 2, imgW, imgH);
+                graphics.render_center_of_texture(texture, x + w / 2, y + h / 2, imgW, imgH,
+                                                  flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
             }
             if (!text.empty())
             {
@@ -173,42 +246,6 @@ struct Button
             }
         }
     }
-
-    void draw_upgrade_info(int _x, int _y, int fontSize = 16,
-                           const string& upgradeTitle = "", const string& currentValue = "",
-                           const string& nextValue = "")
-    {
-        x = _x;
-        y = _y;
-        int borderThickness = 3;
-        graphics.draw_rect(x, y, w, h, borderThickness,
-                           painter.brown, painter.darkBrown, upgradeTitle);
-        graphics.draw_text(upgradeTitle.c_str(), 18, painter.white, x + 20, y + 20);
-        string currentScoreValue = "Current value: " + currentValue;
-        graphics.draw_text(currentScoreValue.c_str(), 14, painter.lightGrey, x + 20, y + 60);
-        string nextScoreValue = "Next value: " + nextValue;
-        graphics.draw_text(nextScoreValue.c_str(), 14, painter.lightGrey, x + 20, y + 85);
-    }
-
-    void handle_open_upgrade_info_click()
-    {
-        mouseX = input->mouse_x;
-        mouseY = input->mouse_y;
-        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
-        {
-            upgradeInfoOpening = true;
-        }
-    }
-
-    void handle_close_upgrade_info_click()
-    {
-        mouseX = input->mouse_x;
-        mouseY = input->mouse_y;
-        if (input->mouse_clicked && mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h)
-        {
-            upgradeInfoOpening = false;
-        }
-    }
 };
 
-#endif // SAI___SCORE_ACCUMULATING_INCREMENTAL_BUTTON_H
+#endif // FHI_Flower_Harvesting_Inc_BUTTON_H

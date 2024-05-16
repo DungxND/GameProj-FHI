@@ -1,7 +1,6 @@
 #include <iostream>
 #include <SDL_main.h>
 #include "game.hpp"
-#include "components/button.hpp"
 
 
 using namespace std;
