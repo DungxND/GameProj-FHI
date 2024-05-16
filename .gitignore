@@ -4,7 +4,6 @@
 # Compiled Object files
 *.slo
 *.lo
-*.o
 *.obj
 
 # Precompiled Headers
@@ -31,6 +30,7 @@
 *.app
 
 Score_Accumulating_Incremental/*
+Flower_Harvesting_Inc/*
 .idea
 cmake-build-debug
 cmake-build-release

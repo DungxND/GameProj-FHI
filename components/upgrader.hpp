@@ -4,25 +4,27 @@
 #include "../graphics_n_audio.hpp"
 #include "../input.hpp"
 
+
 struct Upgrader
 {
-    Graphics graphics{};
+    Graphics* graphics{};
     Input* input{};
     Painter painter{};
-    int x{}, y{}, w{}, h{}, mouseX{}, mouseY{}, textWidth{}, textHeight{}, price{}, value{}, nextValue{}, level{},
-        maxLevel{};
-    string upgradeName, description;
+    int x{}, y{}, w{}, h{}, mouseX{}, mouseY{}, textWidth{}, textHeight{}, maxLevel, size, upgradeBtnMenuLocation;
+    string upgradeName, currency, description;
+    SDL_Color upgradeBtnBGColor{}, upgradeBtnTextColor{}, upgradeBtnBorderColor{}, iconLevelColor = painter.white;
     bool isInfoOpened = false;
-    bool isClicked = false;
+    bool isUpgradeBoardOpened = false;
+    bool isTempUpgraded = false;
 
     Upgrader() = default;
-    Upgrader(Graphics& graphics, Input& input, int w = 300, int h = 100, string upgradeName = "",
-             string description = "",
-             int price = 0, int level = 0, int value = 0, int nextValue = 0, int maxLevel = 0);
 
+    Upgrader(Graphics& graphics, Input& input, int size = 30, int x = 0, int y = 0, string upgradeName = "",
+             string currency = "",
+             string description = "", int maxLevel = 0, int upgradeBtnMenuLocation = 0);
 
-    void draw_upgrade_icon(SDL_Texture* icon, int level, int x, int y, int size);
+    void draw_upgrade_icon(SDL_Texture* icon, int& availableMoney, int& currentLevel, int price,
+                           int currentValue,
+                           int nextValue);
 };
-
-
 #endif //UPGRADER_H

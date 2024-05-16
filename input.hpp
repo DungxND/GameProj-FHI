@@ -2,7 +2,7 @@
 #define INPUT_HPP
 #include <SDL.h>
 #include "defs.hpp"
-#include "structs.hpp"
+#include "data.hpp"
 #include "graphics_n_audio.hpp"
 #include "saver.hpp"
 

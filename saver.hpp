@@ -1,9 +1,9 @@
-#ifndef SAI___SCORE_ACCUMULATING_INCREMENTAL_SAVER_H
-#define SAI___SCORE_ACCUMULATING_INCREMENTAL_SAVER_H
+#ifndef FHI_Flower_Harvesting_Inc_SAVER_H
+#define FHI_Flower_Harvesting_Inc_SAVER_H
 
 #include <fstream>
 #include <string>
-#include "structs.hpp"
+#include "data.hpp"
 
 using namespace std;
 
@@ -17,15 +17,16 @@ struct Saver
         if (file.is_open())
         {
             file << gameData->isFirstRun << "\n";
-            file << gameData->musicPlaying << "\n";
+            file << gameData->musicShouldPlay << "\n";
             file << gameData->playTime << "\n";
             file << gameData->level << "\n";
             file << gameData->xp << "\n";
-            file << gameData->score << "\n";
+            file << gameData->flower << "\n";
             file << gameData->perk << "\n";
             file << gameData->flowerValueUpgrade[0] << "\n";
             file << gameData->flowerLimitUpgrade[0] << "\n";
             file << gameData->flowerSpawnTimeUpgrade[0] << "\n";
+            file << gameData->musicSelection << "\n";
             file << gameData->musicVolume << "\n";
             file.close();
             SDL_Log("Game saved!");
@@ -43,15 +44,16 @@ struct Saver
         if (file.is_open())
         {
             file >> gameData->isFirstRun;
-            file >> gameData->musicPlaying;
+            file >> gameData->musicShouldPlay;
             file >> gameData->playTime;
             file >> gameData->level;
             file >> gameData->xp;
-            file >> gameData->score;
+            file >> gameData->flower;
             file >> gameData->perk;
             file >> gameData->flowerValueUpgrade[0];
             file >> gameData->flowerLimitUpgrade[0];
             file >> gameData->flowerSpawnTimeUpgrade[0];
+            file >> gameData->musicSelection;
             file >> gameData->musicVolume;
             file.close();
             SDL_Log("Save data loaded!");
@@ -63,4 +65,4 @@ struct Saver
     }
 };
 
-#endif // SAI___SCORE_ACCUMULATING_INCREMENTAL_SAVER_H
+#endif // FHI_Flower_Harvesting_Inc_SAVER_H

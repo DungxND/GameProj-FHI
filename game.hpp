@@ -1,5 +1,5 @@
-#ifndef SAI___SCORE_ACCUMULATING_INCREMENTAL_GAME_H
-#define SAI___SCORE_ACCUMULATING_INCREMENTAL_GAME_H
+#ifndef FHI_Flower_Harvesting_Inc_GAME_H
+#define FHI_Flower_Harvesting_Inc_GAME_H
 
 #include <SDL.h>
 #include "graphics_n_audio.hpp"
@@ -16,22 +16,27 @@ struct Game
     Saver saver;
     Input input;
     Painter painter;
-    Button startButton, perkStat, scoreStat, flowerButton, inactiveButton, upgradeTabMenu, perkMenu,
+    Button startButton, perkStat, flowerStat, flowerButton, inactiveButton, normalUpgradeTabMenu, perkMenu,
            settingTabMenu, sellBtn, timeUpgradeInfo, timeUpgradeBtn, valueUpgradeInfo, valueUpgradeBtn, xpStat,
            limitUpgradeInfo, limitUpgradeBtn;
 
-    Upgrader valueUpgrader, timeUpgrader, limitUpgrader;
-    Button musicBtn;
-    Mix_Music* musicx = nullptr;
+    Upgrader valueUpgrader, timeUpgrader, flowerLimitUpgrader;
+    Button musicBtn, nextSongBtn, prevSongBtn, musicVolumeBtn;
+    Button gardenMapBtn, prestigeMapBtn;
+    Mix_Music *MM_CTDB = nullptr, *MM_MXLLLH = nullptr, *MM_HVCLHN = nullptr, *MM_IDLE = nullptr, *music = nullptr;;
     GameData gameData;
     uint32_t startTime, currTime{}, lastSameTime = 0;
+    // currentMap 0=garden, 1=prestige
+    int currentMap = 0, prevSongSelection = 0;
     bool running = true;
     bool oldTimeSet = false;
     bool musicPlayed = false, musicPaused = false;
     int oldTime = 0;
-    int boxSpawnTime = 0;
+    int boxSpawnTime = 0, boxHeight = 0;
     int const SW = SCREEN_WIDTH, SH = SCREEN_HEIGHT;
-    SDL_Texture *background, *upgradeIcon, *perkIcon, *settingIcon, *ApScore, *flowerIcon;
+    string currSongName;
+    SDL_Texture *background, *upgradeIcon, *perkIcon, *settingIcon, *flowerIcon, *clockIcon, *manyFlowersIcon, *
+                prestigeIcon, *slimArrowIcon;
 
     Game();
 
@@ -39,13 +44,19 @@ struct Game
 
     void draw_n_handle_elements();
 
+    void draw_map_menu();
+
     void draw_garden();
+
+    void draw_prestige_map();
 
     void draw_respawn_timer();
 
     void draw_sideboard();
 
-    void draw_upgrade_tab();
+    void draw_normal_upgrade_tab();
+
+    void draw_prestige_upgrade_tab();
 
     void draw_perk_tab();
 
@@ -63,4 +74,4 @@ struct Game
 };
 
 
-#endif // SAI___SCORE_ACCUMULATING_INCREMENTAL_GAME_H
+#endif // FHI_Flower_Harvesting_Inc_GAME_H

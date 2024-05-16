@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.29.2)
-project(SAI___Score_Accumulating_Incremental)
+cmake_minimum_required(VERSION 3.29.3)
+project(FHI_Flower_Harvesting_Inc)
 
 set(CMAKE_CXX_STANDARD 26)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++ -static-libgcc -std=c++23")
@@ -13,7 +13,7 @@ add_executable(${PROJECT_NAME}
         defs.hpp
         graphics_n_audio.hpp
         graphics_n_audio.cpp
-        structs.hpp
+        data.hpp
         saver.hpp
         input.hpp
         components/button.hpp

@@ -1,5 +1,5 @@
-#ifndef SAI___SCORE_ACCUMULATING_INCREMENTAL_SAVER_H
-#define SAI___SCORE_ACCUMULATING_INCREMENTAL_SAVER_H
+#ifndef FHI_Flower_Harvesting_Inc_SAVER_H
+#define FHI_Flower_Harvesting_Inc_SAVER_H
 
 #include "structs.h"
 #include <string>
@@ -46,4 +46,4 @@ struct Saver {
     }
 };
 
-#endif //SAI___SCORE_ACCUMULATING_INCREMENTAL_SAVER_H
+#endif //FHI_Flower_Harvesting_Inc_SAVER_H

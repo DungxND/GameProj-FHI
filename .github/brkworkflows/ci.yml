@@ -36,14 +36,14 @@ jobs:
           windres -i project.rc -o project.o
           pwd
           cmake -DCMAKE_BUILD_TYPE=Release "-DCMAKE_MAKE_PROGRAM=C:/ProgramData/chocolatey/lib/ninja/tools/ninja.exe" -G Ninja -S ./ -B ./build
-          cmake --build ./build --target SAI___Score_Accumulating_Incremental -j 14
+          cmake --build ./build --target FHI_Flower_Harvesting_Inc -j 14
           ninja -C build
 
       - name: Zip the build
         run: |
           cp SDL2.dll SDL2_image.dll SDL2_ttf.dll SDL2_mixer.dll build
           cd build
-          7z a -sfx -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on SAI___Score_Accumulating_Incremental.exe assets/ SDL2.dll SDL2_image.dll SDL2_ttf.dll -o SAI_${{env.VERSION}}.7z
+          7z a -sfx -t7z -m0=lzma -mx=9 -mfb=64 -md=32m -ms=on FHI_Flower_Harvesting_Inc.exe assets/ SDL2.dll SDL2_image.dll SDL2_ttf.dll -o SAI_${{env.VERSION}}.7z
           ls -la
 
       - name: Generate release notes
