@@ -9,17 +9,6 @@ A C++ SDL Game: Flower Harvesting Incremental</h2>
 
 ###### This project is developed as a part of the Advanced Programming course at the University of Engineering and Technology - VNUH.
 
-- Full name: Nguyễn Đức Dũng
-- SID: 23021495
-- Course: INT2215_22
-- Expected mark: >=8.5, reason:
-  - Having a simple UI
-  - Code from scratch, inherit some of the graphic and keyboard management code from [the instructor repo](https://github.com/chauttm/gameProject/tree/main/06_keyboard_event)
-  - With game features:
-    - Save/load game data
-    - Volume slider
-    - and more..
-
 ## Introduction
 
 A game developed in C++ using the SDL2 library. The game is a simple incremental game where the player
@@ -32,6 +21,7 @@ Click [Release](https://github.com/DungxND/GameProj-SAI/releases) tab to downloa
 
 #### TO-DO:
 
+- [ ] Migrate to SDL3
 - [x] Save and load game data
 - [x] Create separate upgrade infobox
 - [ ] Add reset layers
